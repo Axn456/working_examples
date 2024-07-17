@@ -1,0 +1,44 @@
+source:
+  conn_id: lssup_connection_to_vertica
+  schema: lssup_team
+  table: lssup_wh_team_active
+
+target:
+  cluster: datamarts-shared
+  virtual_cluster: datamarts-shared
+  conn_id: lssup_connection_to_datamarts
+  dst_schema: LSSUP
+  dst_table: lssup_wh_team_active
+
+  fields:
+    Task:
+      data_type: String
+      is_nullable: False
+    State:
+      data_type: String
+      is_nullable: False  
+    Summary:
+      data_type: String
+      is_nullable: False
+    LastUpdate:
+      data_type: String
+      is_nullable: False
+    DueDate:
+      data_type: String
+      is_nullable: True    
+    Usr:
+      data_type: String
+      is_nullable: True 
+
+
+  sharding:
+    fields:
+      Task
+
+notify:
+  success_channel: lssup_superset_success
+  failure_channel: lssup_superset_failure
+
+owner:
+  team: lssup
+  report: lssup_report

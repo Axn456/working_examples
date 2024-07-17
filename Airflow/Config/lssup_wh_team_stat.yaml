@@ -1,0 +1,38 @@
+source:
+  conn_id: lssup_connection_to_vertica
+  schema: lssup_team
+  table: lssup_wh_team_stat
+
+target:
+  cluster: datamarts-shared
+  virtual_cluster: datamarts-shared
+  conn_id: lssup_connection_to_datamarts
+  dst_schema: LSSUP
+  dst_table: lssup_wh_team_stat
+
+  fields:
+    RequestType:
+      data_type: String
+      is_nullable: False
+    JiraCreatedDate:
+      data_type: Date
+      is_nullable: False  
+    JiraResolveDate:
+      data_type: Date
+      is_nullable: True
+    Login:
+      data_type: String
+      is_nullable: True  
+
+
+  sharding:
+    fields:
+      JiraCreatedDate
+
+notify:
+  success_channel: lssup_superset_success
+  failure_channel: lssup_superset_failure
+
+owner:
+  team: lssup
+  report: lssup_report
